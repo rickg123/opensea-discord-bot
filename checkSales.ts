@@ -23,15 +23,15 @@ const  discordSetup = async (): Promise<TextChannel> => {
 const buildMessage = (sale: any) => (
   new Discord.MessageEmbed()
 	.setColor('#0099ff')
-	.setTitle(sale.asset.name + ' created!')
+	.setTitle(sale.asset.name + ' sold!')
 	.setURL(sale.asset.permalink)
-	.setAuthor('OpenSea Test Bot', 'https://files.readme.io/566c72b-opensea-logomark-full-colored.png', 'http://malibubeachhut.info')
+	.setAuthor('TEST', 'https://files.readme.io/566c72b-opensea-logomark-full-colored.png', 'http://malibubeachhut.info')
 	.setThumbnail(sale.asset.collection.image_url)
 	.addFields(
 		{ name: 'Name', value: sale.asset.name },
-		//{ name: 'Amount', value: `${ethers.utils.formatEther(sale.total_price)}${ethers.constants.EtherSymbol}`},
-		//{ name: 'Buyer', value: sale?.winner_account?.address, },
-		//{ name: 'Seller', value: sale?.seller?.address,  },
+		{ name: 'Amount', value: `${ethers.utils.formatEther(sale.total_price)}${ethers.constants.EtherSymbol}`},
+		{ name: 'Buyer', value: sale?.winner_account?.address, },
+		{ name: 'Seller', value: sale?.seller?.address,  },
 	)
   .setImage(sale.asset.image_url)
 	.setTimestamp(Date.parse(`${sale?.created_date}Z`))
@@ -47,7 +47,7 @@ async function main() {
     "https://api.opensea.io/api/v1/events?" + new URLSearchParams({
       offset: '0',
       limit: '100',
-      event_type: 'created',
+      event_type: 'successful',
       only_opensea: 'false',
       occurred_after: hoursAgo.toString(), 
       collection_slug: process.env.COLLECTION_SLUG!,
